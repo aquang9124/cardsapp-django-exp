@@ -1,0 +1,25 @@
+{% extends 'master.html' %}
+
+{% block title %}Cards App{% endblock %}
+
+{% block content %}
+<h2>Here are all the cards</h2>
+	{% for card in cards %}
+	<p><a href="{% url 'cards-show' card.id %}">{{ card.title }}</a></p>
+	{% empty %}
+	{% endfor %}
+<hr>
+<h2>Add a new card</h2>
+{% if messages %}
+	<ul>
+	{% for message in messages %}
+		<li>{{ message }}</li>
+	</ul>
+	{% endfor %}
+{% endif %}
+<form action="{% url 'cards-create' %}" method="post">
+	{% csrf_token %}
+	<input type="text" name="title">
+	<button>Add Card</button>
+</form>
+{% endblock %}

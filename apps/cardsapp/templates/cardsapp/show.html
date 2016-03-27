@@ -1,0 +1,30 @@
+{% extends 'master.html' %}
+
+{% block title %}Show Card Details{% endblock %}
+
+{% block content %}
+<h1>{{ card.title }}</h1>
+<h2>Here are all the notes for this card</h2>
+{% for note in notes %}
+	<p>{{ note.body }}</p>
+{% empty %}
+{% endfor %}
+<hr>
+<h2>Add a new note</h2>
+{% if messages %}
+	<ul>
+	{% for message in messages %}
+		<li>{{ message }}</li>
+	</ul>
+	{% endfor %}
+{% endif %}
+<form action="{% url 'notes-create' card.id %}" method="post">
+	{% csrf_token %}
+	<textarea name="body" cols="30" rows="10"></textarea>
+	<button>Add Note</button>
+</form>
+<hr>
+<form action="{% url 'index' %}">
+	<button>Go back to index</button>
+</form>
+{% endblock %}
